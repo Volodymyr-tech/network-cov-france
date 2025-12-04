@@ -20,7 +20,11 @@ class GeographicSearch:
 
             data = result.json()
 
-            return data["features"][0]["properties"]["city"]
+            features = data.get("features", [])
+            if not features:
+                print(f"[GeographicSearch] No features found for {longitude}, {latitude}")
+                return None
+            return features[0]["properties"].get("city")
 
         except requests.exceptions.HTTPError as e:
             print(f"Error HTTP: {e}")
