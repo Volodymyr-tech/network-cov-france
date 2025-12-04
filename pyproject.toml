@@ -9,7 +9,11 @@ readme = "README.md"
 requires-python =  ">=3.12"
 dependencies = [
     "django (>=6.0,<7.0)",
-    "djangorestframework (>=3.16.1,<4.0.0)"
+    "djangorestframework (>=3.16.1,<4.0.0)",
+    "pyproj (>=3.7.2,<4.0.0)",
+    "requests (>=2.32.5,<3.0.0)",
+    "psycopg2 (>=2.9.11,<3.0.0)",
+    "gunicorn (>=23.0.0,<24.0.0)"
 ]
 
 
