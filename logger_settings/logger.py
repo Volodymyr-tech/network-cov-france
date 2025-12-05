@@ -11,7 +11,7 @@ def get_logger(module_name: str, level=logging.INFO) -> logging.Logger:
     logger.setLevel(level)
 
     if logger.handlers:
-        return logger  # не создавать хендлеры повторно
+        return logger
 
     log_path = os.path.join(LOG_DIR, f"{module_name}.log")
 
