@@ -8,20 +8,17 @@ from logger_settings.logger import get_logger
 
 log = get_logger("save_csv_in_db")
 
-MNC_TO_NAME = {
-    "20801": "Orange",
-    "20810": "SFR",
-    "20815": "Free",
-    "20820": "Bouygue"
-}
+MNC_TO_NAME = {"20801": "Orange", "20810": "SFR", "20815": "Free", "20820": "Bouygue"}
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        path = os.path.join("data", "2018_01_Sites_mobiles_2G_3G_4G_France_metropolitaine_L93.csv")
+        path = os.path.join(
+            "data", "2018_01_Sites_mobiles_2G_3G_4G_France_metropolitaine_L93.csv"
+        )
 
         with open(path, newline="", encoding="utf-8") as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=';')
+            reader = csv.DictReader(csvfile, delimiter=";")
             count = 0
             skipped = 0
 
@@ -38,7 +35,9 @@ class Command(BaseCommand):
 
                     lon, lat = coords
                     var = GeographicSearch(lon, lat)
-                    city = GeographicSearch.geographic_search(var.longitude, var.latitude)
+                    city = GeographicSearch.geographic_search(
+                        var.longitude, var.latitude
+                    )
 
                     if not city:
                         skipped += 1
@@ -46,15 +45,19 @@ class Command(BaseCommand):
                         continue
 
                     operator_code = row["Operateur"]
-                    operator_name = MNC_TO_NAME.get(operator_code, f"Unknown {operator_code}")
-                    operator, _ = Operator.objects.get_or_create(code=operator_code, defaults={"name": operator_name})
+                    operator_name = MNC_TO_NAME.get(
+                        operator_code, f"Unknown {operator_code}"
+                    )
+                    operator, _ = Operator.objects.get_or_create(
+                        code=operator_code, defaults={"name": operator_name}
+                    )
 
                     MobileSite.objects.create(
                         operator=operator,
                         city=city,
                         has_2g=row["2G"],
                         has_3g=row["3G"],
-                        has_4g=row["4G"]
+                        has_4g=row["4G"],
                     )
 
                     count += 1
@@ -65,4 +68,3 @@ class Command(BaseCommand):
                     log.info(f"Error in row: {row}\n→ {str(e)}")
 
         log.info(f"Import. Success: {count}, skipped: {skipped}")
-

@@ -8,27 +8,47 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Operator',
+            name="Operator",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('code', models.CharField(max_length=10, unique=True)),
-                ('name', models.CharField(max_length=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("code", models.CharField(max_length=10, unique=True)),
+                ("name", models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
-            name='MobileSite',
+            name="MobileSite",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('city', models.CharField(max_length=255)),
-                ('has_2g', models.BooleanField()),
-                ('has_3g', models.BooleanField()),
-                ('has_4g', models.BooleanField()),
-                ('operator', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.operator')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("city", models.CharField(max_length=255)),
+                ("has_2g", models.BooleanField()),
+                ("has_3g", models.BooleanField()),
+                ("has_4g", models.BooleanField()),
+                (
+                    "operator",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="app.operator"
+                    ),
+                ),
             ],
         ),
     ]

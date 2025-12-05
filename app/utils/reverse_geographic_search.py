@@ -12,8 +12,7 @@ class GeographicSearch:
     def geographic_search(longitude, latitude):
         try:
             result = requests.get(
-                url=GeographicSearch.url,
-                params={'lon': longitude, 'lat': latitude}
+                url=GeographicSearch.url, params={"lon": longitude, "lat": latitude}
             )
 
             result.raise_for_status()
@@ -22,7 +21,9 @@ class GeographicSearch:
 
             features = data.get("features", [])
             if not features:
-                print(f"[GeographicSearch] No features found for {longitude}, {latitude}")
+                print(
+                    f"[GeographicSearch] No features found for {longitude}, {latitude}"
+                )
                 return None
             return features[0]["properties"].get("city")
 

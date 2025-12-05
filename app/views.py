@@ -7,9 +7,12 @@ from app.serializers import MobileSiteSerializer
 
 class MobileSiteByCityView(APIView):
     def get(self, request):
-        city = request.query_params.get('q')
+        city = request.query_params.get("q")
         if not city:
-            return Response({'error': 'Missing ?q=city parameter'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Missing ?q=city parameter"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         sites = MobileSite.objects.filter(city__iexact=city)
         serializer = MobileSiteSerializer(sites, many=True)
