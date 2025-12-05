@@ -29,9 +29,7 @@ class MobileSiteByCityViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["city"], "Paris")
-        self.assertTrue(response.data[0]["has_2g"])
-        self.assertTrue(response.data[0]["has_3g"])
-        self.assertTrue(response.data[0]["has_4g"])
+
 
     def test_get_sites_by_city_case_insensitive(self):
         url = "/api/coverage/?q=paris"

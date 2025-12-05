@@ -14,3 +14,5 @@ class MobileSiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = MobileSite
         fields = ["operator", "city", "has_2g", "has_3g", "has_4g"]
+
+
