@@ -54,7 +54,8 @@ class Command(BaseCommand):
 
                     MobileSite.objects.create(
                         operator=operator,
-                        city=city,
+                        x=row["x"],
+                        y=row["y"],
                         has_2g=row["2G"],
                         has_3g=row["3G"],
                         has_4g=row["4G"],
