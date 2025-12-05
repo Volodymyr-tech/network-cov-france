@@ -9,7 +9,9 @@ class Operator(models.Model):
 
 class MobileSite(models.Model):
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
-    city = models.CharField(max_length=255)
+    x = models.IntegerField()
+    y = models.IntegerField()
     has_2g = models.BooleanField()
     has_3g = models.BooleanField()
     has_4g = models.BooleanField()
+
