@@ -41,9 +41,9 @@ class MobileSiteByCityView(APIView):
                 },
                 "city": city,
                 "coverage_averages": {  # Возвращаем исходный ключ
-                    "avg_2g": status_2g,
-                    "avg_3g": status_3g,
-                    "avg_4g": status_4g,
+                    "2g": status_2g,
+                    "3g": status_3g,
+                    "4g": status_4g,
                 }
             })
 
