@@ -13,7 +13,7 @@ class Location(models.Model):
     y = models.IntegerField(null=True)
 
     class Meta:
-        unique_together = ('x', 'y')
+        unique_together = ("x", "y")
 
     def __str__(self):
         return self.city
@@ -25,4 +25,3 @@ class MobileSite(models.Model):
     has_2g = models.BooleanField()
     has_3g = models.BooleanField()
     has_4g = models.BooleanField()
-

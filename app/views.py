@@ -8,6 +8,8 @@ from app.models import MobileSite
 
 
 class MobileSiteByCityView(APIView):
+    """Returns an average coverage by city"""
+
     def get(self, request):
         city = request.query_params.get("q")
         if not city:
@@ -17,8 +19,7 @@ class MobileSiteByCityView(APIView):
             )
 
         sites_by_operator = (
-            MobileSite.objects
-            .filter(location__city__exact=city)
+            MobileSite.objects.filter(location__city__exact=city)
             .values("operator__code", "operator__name")
             .annotate(
                 avg_2g=Avg(Cast("has_2g", output_field=IntegerField())),
@@ -32,16 +33,18 @@ class MobileSiteByCityView(APIView):
         result_data = []
 
         for item in sites_by_operator:
-            result_data.append({
-                "operator": {
-                    "code": item["operator__code"],
-                    "name": item["operator__name"],
-                },
-                "coverage": {
-                    "2g": item["avg_2g"] is not None and item["avg_2g"] >= COVERAGE_THRESHOLD,
-                    "3g": item["avg_3g"] is not None and item["avg_3g"] >= COVERAGE_THRESHOLD,
-                    "4g": item["avg_4g"] is not None and item["avg_4g"] >= COVERAGE_THRESHOLD,
-                },
-            })
+            result_data.append(
+                {
+                    "operator": {
+                        "code": item["operator__code"],
+                        "name": item["operator__name"],
+                    },
+                    "coverage": {
+                        "2g": item["avg_2g"] is not None and item["avg_2g"] >= COVERAGE_THRESHOLD,
+                        "3g": item["avg_3g"] is not None and item["avg_3g"] >= COVERAGE_THRESHOLD,
+                        "4g": item["avg_4g"] is not None and item["avg_4g"] >= COVERAGE_THRESHOLD,
+                    },
+                }
+            )
 
         return Response(result_data, status=status.HTTP_200_OK)

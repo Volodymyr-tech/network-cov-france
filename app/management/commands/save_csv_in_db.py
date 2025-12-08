@@ -12,10 +12,10 @@ MNC_TO_NAME = {"20801": "Orange", "20810": "SFR", "20815": "Free", "20820": "Bou
 
 
 class Command(BaseCommand):
+    """This command imports data from CSV file and saves it in database."""
+
     def handle(self, *args, **options):
-        path = os.path.join(
-            "data", "2018_01_Sites_mobiles_2G_3G_4G_France_metropolitaine_L93.csv"
-        )
+        path = os.path.join("data", "2018_01_Sites_mobiles_2G_3G_4G_France_metropolitaine_L93.csv")
 
         with open(path, newline="", encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile, delimiter=";")
@@ -35,9 +35,7 @@ class Command(BaseCommand):
 
                     lon, lat = coords
                     var = GeographicSearch(lon, lat)
-                    city = GeographicSearch.geographic_search(
-                        var.longitude, var.latitude
-                    )
+                    city = GeographicSearch.geographic_search(var.longitude, var.latitude)
 
                     if not city:
                         skipped += 1
@@ -45,18 +43,10 @@ class Command(BaseCommand):
                         continue
 
                     operator_code = row["Operateur"]
-                    operator_name = MNC_TO_NAME.get(
-                        operator_code, f"Unknown {operator_code}"
-                    )
-                    operator, _ = Operator.objects.get_or_create(
-                        code=operator_code, defaults={"name": operator_name}
-                    )
+                    operator_name = MNC_TO_NAME.get(operator_code, f"Unknown {operator_code}")
+                    operator, _ = Operator.objects.get_or_create(code=operator_code, defaults={"name": operator_name})
 
-                    location, _ = Location.objects.get_or_create(
-                        x=x,
-                        y=y,
-                        defaults={"city": city}
-                    )
+                    location, _ = Location.objects.get_or_create(x=x, y=y, defaults={"city": city})
                     MobileSite.objects.create(
                         operator=operator,
                         location=location,

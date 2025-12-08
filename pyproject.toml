@@ -27,3 +27,25 @@ dev = [
     "black (>=25.11.0,<26.0.0)",
     "flake8 (>=7.3.0,<8.0.0)"
 ]
+
+
+
+
+
+[tool.black]
+line-length = 119 # Максимальная длина строки
+exclude = '''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | dist
+  )/
+  | foo.py
+
+)
+'''

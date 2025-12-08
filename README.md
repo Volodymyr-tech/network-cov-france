@@ -27,7 +27,7 @@ A Django-based API that provides mobile network coverage data (2G, 3G, 4G) by ci
 
 #### Once the app is running in Docker:
 
-- docker-compose exec web python manage.py import_sites_csv
+- docker-compose exec web python manage.py save_csv_in_db.py
 
 
 #### This command imports data from:

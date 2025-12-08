@@ -72,9 +72,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "operator",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="app.operator"
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="app.operator"),
                 ),
             ],
         ),

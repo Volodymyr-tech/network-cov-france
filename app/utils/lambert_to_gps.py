@@ -4,6 +4,7 @@ transformer = Transformer.from_crs("EPSG:2154", "EPSG:4326", always_xy=True)
 
 
 def lamber93_to_gps(x, y):
+    """Converts lambert coordinates to GPS"""
     try:
         lon, lat = transformer.transform(x, y)
         return lon, lat

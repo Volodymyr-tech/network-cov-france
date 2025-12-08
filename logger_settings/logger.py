@@ -7,6 +7,7 @@ os.makedirs(LOG_DIR, exist_ok=True)
 
 
 def get_logger(module_name: str, level=logging.INFO) -> logging.Logger:
+    """Returns a logger with the given name and level"""
     logger = logging.getLogger(module_name)
     logger.setLevel(level)
 
@@ -15,12 +16,8 @@ def get_logger(module_name: str, level=logging.INFO) -> logging.Logger:
 
     log_path = os.path.join(LOG_DIR, f"{module_name}.log")
 
-    file_handler = RotatingFileHandler(
-        log_path, maxBytes=5 * 1024 * 1024, backupCount=3, encoding="utf-8"
-    )
-    formatter = logging.Formatter(
-        "[%(asctime)s] [%(levelname)s] %(name)s - %(message)s", "%Y-%m-%d %H:%M:%S"
-    )
+    file_handler = RotatingFileHandler(log_path, maxBytes=5 * 1024 * 1024, backupCount=3, encoding="utf-8")
+    formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s - %(message)s", "%Y-%m-%d %H:%M:%S")
     file_handler.setFormatter(formatter)
 
     logger.addHandler(file_handler)

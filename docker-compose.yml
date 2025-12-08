@@ -1,30 +1,30 @@
 
-services: # describing services we're going to use
+services:
 
   web:
-    build: . # it uses DockerFile in main directory and install Python and Django code
+    build: .
     env_file:
-      - .env # giving access to environment variables
+      - .env
     command: >
       sh -c "python manage.py makemigrations && \
              python manage.py migrate && \
              gunicorn config.wsgi:application --bind 0.0.0.0:8003"
 
     volumes:
-      - .:/app # we use main directory and docker directory /app for saving changing in code
-    ports: # mapping host port with docker container port
+      - .:/app
+    ports:
       - "8003:8003"
-    depends_on: # it will run only if DB connection is True
+    depends_on:
       db:
         condition: service_healthy
 
   db:
-    image: postgres:17 # using image from DockerHub
-    env_file: # giving access to environment variables
+    image: postgres:17
+    env_file:
       - .env
-    volumes:  # it allows us to save data even if container was stopped
+    volumes:
       - postgres_data:/var/lib/postgresql/data
-    healthcheck: # testing DB before we start server
+    healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 30s
       timeout: 10s
