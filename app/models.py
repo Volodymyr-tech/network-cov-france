@@ -7,10 +7,21 @@ class Operator(models.Model):
     name = models.CharField(max_length=100)  # Orange
 
 
+class Location(models.Model):
+    city = models.CharField(max_length=255)
+    x = models.IntegerField(null=True)
+    y = models.IntegerField(null=True)
+
+    class Meta:
+        unique_together = ('x', 'y')
+
+    def __str__(self):
+        return self.city
+
+
 class MobileSite(models.Model):
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="sites")
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
-    x = models.IntegerField()
-    y = models.IntegerField()
     has_2g = models.BooleanField()
     has_3g = models.BooleanField()
     has_4g = models.BooleanField()

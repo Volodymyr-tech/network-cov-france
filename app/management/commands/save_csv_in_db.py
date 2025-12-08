@@ -3,7 +3,7 @@ import os
 from django.core.management.base import BaseCommand
 from app.utils.lambert_to_gps import lamber93_to_gps
 from app.utils.reverse_geographic_search import GeographicSearch
-from app.models import MobileSite, Operator
+from app.models import MobileSite, Operator, Location
 from logger_settings.logger import get_logger
 
 log = get_logger("save_csv_in_db")
@@ -24,8 +24,8 @@ class Command(BaseCommand):
 
             for row in reader:
                 try:
-                    x = float(row["x"])
-                    y = float(row["y"])
+                    x = int(row["x"])
+                    y = int(row["y"])
 
                     coords = lamber93_to_gps(x, y)
 
@@ -52,10 +52,14 @@ class Command(BaseCommand):
                         code=operator_code, defaults={"name": operator_name}
                     )
 
+                    location, _ = Location.objects.get_or_create(
+                        x=x,
+                        y=y,
+                        defaults={"city": city}
+                    )
                     MobileSite.objects.create(
                         operator=operator,
-                        x=row["x"],
-                        y=row["y"],
+                        location=location,
                         has_2g=row["2G"],
                         has_3g=row["3G"],
                         has_4g=row["4G"],
