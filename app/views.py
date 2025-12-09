@@ -19,7 +19,7 @@ class MobileSiteByCityView(APIView):
             )
 
         sites_by_operator = (
-            MobileSite.objects.filter(location__city__exact=city)
+            MobileSite.objects.filter(location__city__iexact=city)
             .values("operator__code", "operator__name")
             .annotate(
                 avg_2g=Avg(Cast("has_2g", output_field=IntegerField())),
