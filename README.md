@@ -43,8 +43,13 @@ A Django-based API that provides mobile network coverage data (2G, 3G, 4G) by ci
 
 - GET /api/coverage/?q=Paris
 
-✅ Example Response:
-
+####  ✅ Example Response:
+```json
+{
+  "orange": { "2G": true, "3G": true, "4G": false },
+  "SFR": { "2G": true, "3G": true, "4G": true }
+}
+```
 
 ## 🧪 Running Tests
 - docker-compose exec web python manage.py test
