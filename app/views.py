@@ -18,6 +18,8 @@ class MobileSiteByCityView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        city = city.strip().lower()
+
         sites_by_operator = (
             MobileSite.objects.filter(location__city__exact=city)
             .values("operator__code", "operator__name")
