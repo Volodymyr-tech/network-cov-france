@@ -35,11 +35,7 @@ class MobileSiteByCityView(APIView):
         for item in sites_by_operator:
             result_data.append(
                 {
-                    "operator": {
-                        "code": item["operator__code"],
-                        "name": item["operator__name"],
-                    },
-                    "coverage": {
+                    item["operator__name"]: {
                         "2g": item["avg_2g"] is not None and item["avg_2g"] >= COVERAGE_THRESHOLD,
                         "3g": item["avg_3g"] is not None and item["avg_3g"] >= COVERAGE_THRESHOLD,
                         "4g": item["avg_4g"] is not None and item["avg_4g"] >= COVERAGE_THRESHOLD,
