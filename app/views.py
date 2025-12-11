@@ -30,17 +30,15 @@ class MobileSiteByCityView(APIView):
         )
 
         COVERAGE_THRESHOLD = 0.5
-        result_data = []
+
+        result_data = {}
 
         for item in sites_by_operator:
-            result_data.append(
-                {
-                    item["operator__name"]: {
-                        "2g": item["avg_2g"] is not None and item["avg_2g"] >= COVERAGE_THRESHOLD,
-                        "3g": item["avg_3g"] is not None and item["avg_3g"] >= COVERAGE_THRESHOLD,
-                        "4g": item["avg_4g"] is not None and item["avg_4g"] >= COVERAGE_THRESHOLD,
-                    },
-                }
-            )
+            operator = item["operator__name"]
+            result_data[operator] = {
+                "2G": item["avg_2g"] is not None and item["avg_2g"] >= COVERAGE_THRESHOLD,
+                "3G": item["avg_3g"] is not None and item["avg_3g"] >= COVERAGE_THRESHOLD,
+                "4G": item["avg_4g"] is not None and item["avg_4g"] >= COVERAGE_THRESHOLD,
+            }
 
         return Response(result_data, status=status.HTTP_200_OK)
